@@ -1,6 +1,7 @@
 # import modules
 from pytube import YouTube
 import ffmpeg
+import eyed3
 print('Modules ready!')
 
 # infomation
@@ -20,6 +21,7 @@ print('Made by KeyFrog')
 # input music's info
 title = input(' Input music\'s title : ')
 artist = input(' Input artist\'s name : ')
+album = input(' Input album\'s name : ')
 link = input(' Input music\'s YouTube URL : ')
 
 # download video from YouTube
@@ -33,3 +35,11 @@ audio = input.audio.filter("aecho", 0.8, 0.9, 1000, 0.3)
 out = ffmpeg.output(audio, f'{title} - {artist}.mp3')
 ffmpeg.run(out)
 print(' CONVERT SUCCESS!')
+
+# add metadata
+audiofile = eyed3.load(f"{title} - {artist}.mp3")
+audiofile.tag.artist = artist
+audiofile.tag.album = album
+audiofile.tag.title = title
+audiofile.tag.save()
+print(' ADD METADATA SUCCESS')
