@@ -12,7 +12,7 @@ yt = YouTube(link)
 yt.streams.filter(only_audio=True).first().download()
 
 # convert mp4 file to mp3
-input = ffmpeg.input(f'{yt.title}.mp4')
+input = ffmpeg.input(f'{yt.streams.filter(only_audio=True).first().download()}')
 audio = input.audio.filter("aecho", 0.8, 0.9, 1000, 0.3)
 out = ffmpeg.output(audio, f'{title} - {artist}.mp3')
 ffmpeg.run(out)
